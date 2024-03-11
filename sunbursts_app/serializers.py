@@ -1,8 +1,7 @@
 from rest_framework import serializers
-from .models import CookieStand
+from .models import Sunburst
 
-
-class CookieStandSerializer(serializers.ModelSerializer):
+class SunburstSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CookieStand
+        model = Sunburst
         fields = "__all__"

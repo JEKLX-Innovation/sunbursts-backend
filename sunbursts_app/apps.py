@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class CookieStandsConfig(AppConfig):
-    name = 'cookie_stands'
+class SunburstsAppConfig(AppConfig):
+    name = 'sunbursts'

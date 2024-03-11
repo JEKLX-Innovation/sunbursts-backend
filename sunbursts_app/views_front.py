@@ -1,33 +1,33 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
-from .models import CookieStand
+from .models import Sunburst
 
 
-class CookieStandListView(LoginRequiredMixin, ListView):
-    template_name = "cookiestands/cookiestand_list.html"
-    model = CookieStand
+class SunburstListView(LoginRequiredMixin, ListView):
+    template_name = "sunbursts/sunburst_list.html"
+    model = Sunburst
     context_object_name = "cookie_stands"
 
 
-class CookieStandDetailView(LoginRequiredMixin, DetailView):
-    template_name = "cookiestands/cookiestand_detail.html"
-    model = CookieStand
+class SunburstDetailView(LoginRequiredMixin, DetailView):
+    template_name = "sunbursts/sunburst_detail.html"
+    model = Sunburst
 
 
-class CookieStandUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "cookiestands/cookiestand_update.html"
-    model = CookieStand
+class SunburstUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "sunbursts/sunburst_update.html"
+    model = Sunburst
     fields = "__all__"
 
 
-class CookieStandCreateView(LoginRequiredMixin, CreateView):
-    template_name = "cookiestands/cookiestand_create.html"
-    model = CookieStand
+class SunburstCreateView(LoginRequiredMixin, CreateView):
+    template_name = "sunbursts/sunburst_create.html"
+    model = Sunburst
     # fields = ["name", "rating", "reviewer"]
     fields = "__all__"
 
-class CookieStandDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "cookiestands/cookiestand_delete.html"
-    model = CookieStand
-    success_url = reverse_lazy("cookiestand_list")
+class SunburstDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = "sunbursts/sunburst_delete.html"
+    model = Sunburst
+    success_url = reverse_lazy("sunburst_list")

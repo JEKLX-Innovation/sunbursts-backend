@@ -1,16 +1,16 @@
 from django.urls import path
 from .views_front import (
-    CookieStandCreateView,
-    CookieStandDeleteView,
-    CookieStandDetailView,
-    CookieStandListView,
-    CookieStandUpdateView,
+    SunburstCreateView,
+    SunburstDeleteView,
+    SunburstDetailView,
+    SunburstListView,
+    SunburstUpdateView,
 )
 
 urlpatterns = [
-    path("", CookieStandListView.as_view(), name="cookiestand_list"),
-    path("<int:pk>/", CookieStandDetailView.as_view(), name="cookiestand_detail"),
-    path("create/", CookieStandCreateView.as_view(), name="cookiestand_create"),
-    path("<int:pk>/update/", CookieStandUpdateView.as_view(), name="cookiestand_update"),
-    path("<int:pk>/delete/", CookieStandDeleteView.as_view(), name="cookiestand_delete"),
+    path("", SunburstListView.as_view(), name="sunburst_list"),
+    path("<int:pk>/", SunburstDetailView.as_view(), name="sunburst_detail"),
+    path("create/", SunburstCreateView.as_view(), name="sunburst_create"),
+    path("<int:pk>/update/", SunburstUpdateView.as_view(), name="sunburst_update"),
+    path("<int:pk>/delete/", SunburstDeleteView.as_view(), name="sunburst_delete"),
 ]

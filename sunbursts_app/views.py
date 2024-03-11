@@ -2,17 +2,17 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
-from .models import CookieStand
+from .models import Sunburst
 from .permissions import IsOwnerOrReadOnly
-from .serializers import CookieStandSerializer
+from .serializers import SunburstSerializer
 
 
-class CookieStandList(ListCreateAPIView):
-    queryset = CookieStand.objects.all()
-    serializer_class = CookieStandSerializer
+class SunburstList(ListCreateAPIView):
+    queryset = Sunburst.objects.all()
+    serializer_class = SunburstSerializer
 
 
-class CookieStandDetail(RetrieveUpdateDestroyAPIView):
+class SunburstDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    queryset = CookieStand.objects.all()
-    serializer_class = CookieStandSerializer
+    queryset = Sunburst.objects.all()
+    serializer_class = SunburstSerializer

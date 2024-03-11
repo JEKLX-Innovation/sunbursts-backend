@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CookieStand
+from .models import Sunburst
 
 # Register your models here.
-admin.site.register(CookieStand)
+admin.site.register(Sunburst)

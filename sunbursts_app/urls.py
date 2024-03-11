@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import CookieStandList, CookieStandDetail
+from .views import SunburstList, SunburstDetail
 
 urlpatterns = [
-    path("", CookieStandList.as_view(), name="cookiestand_list"),
-    path("<int:pk>/", CookieStandDetail.as_view(), name="cookiestand_detail"),
+    path("", SunburstList.as_view(), name="sunburst_list"),
+    path("<int:pk>/", SunburstDetail.as_view(), name="sunburst_detail"),
 ]
