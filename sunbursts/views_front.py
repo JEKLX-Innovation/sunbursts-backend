@@ -7,7 +7,7 @@ from .models import Sunburst
 class SunburstListView(LoginRequiredMixin, ListView):
     template_name = "sunbursts/sunburst_list.html"
     model = Sunburst
-    context_object_name = "cookie_stands"
+    context_object_name = "sunbursts"
 
 
 class SunburstDetailView(LoginRequiredMixin, DetailView):
