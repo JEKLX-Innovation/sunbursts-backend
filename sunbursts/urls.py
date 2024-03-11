@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import SunburstList, SunburstDetail
+from .views import SunburstListView, SunburstDetailView
 
 urlpatterns = [
-    path("", SunburstList.as_view(), name="sunburst_list"),
-    path("<int:pk>/", SunburstDetail.as_view(), name="sunburst_detail"),
+    path("", SunburstListView.as_view(), name="sunburst_list"),
+    path("<int:pk>/", SunburstDetailView.as_view(), name="sunburst_detail"),
 ]
