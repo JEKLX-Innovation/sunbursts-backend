@@ -7,12 +7,12 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import SunburstSerializer
 
 
-class SunburstList(ListCreateAPIView):
+class SunburstListView(ListCreateAPIView):
     queryset = Sunburst.objects.all()
     serializer_class = SunburstSerializer
 
 
-class SunburstDetail(RetrieveUpdateDestroyAPIView):
+class SunburstDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
     queryset = Sunburst.objects.all()
     serializer_class = SunburstSerializer
