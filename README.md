@@ -1,15 +1,21 @@
-# Lab: Class 34 - Putting it All Together
+# Sunbursts
 
-## Author: Xin Deng
+## Group Members
 
-### Links and Resources
+Johnny Backus, Kaitlin Davis, Xin Deng, Errol Vidad, Lana Zumbrunn
 
-- chatGPT
-- [Class 34 Demo](https://github.com/codefellows/seattle-code-python-401d24/tree/main/class-34/demo)
+### Summary of project:
+
+This project will allow an admin to collect data from participants in a way that doesn’t require participants to use a spreadsheet which is prone to errors when formulas get messed up.
+
+It will make analyzing the data easier for the admin. Right now, pulling together the data from all the participants is labor intensive.
+
+It will allow for data visualization that is beautiful and easily digestible.
+
 
 ### Overview - Django Permissions & Postgresql
 
-This is a project that brings “Vanilla” Django and Django Rest Framework together in the same project. It builds out a Restful API as well as a user facing site and move to a remote database. The project will be a Cookie Stand management site.
+Complete at end of week. This project uses Django and Django Rest Framework together. It builds out a Restful API as well as a user facing site and data in a remote database.
 
 #### Version 1.0
 

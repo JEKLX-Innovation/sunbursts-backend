@@ -14,3 +14,4 @@ class CookieStandDetailView(LoginRequiredMixin, DetailView):
     template_name = "cookiestands/cookiestand_detail.html"
     model = CookieStand
 
+

@@ -11,3 +11,4 @@ urlpatterns = [
     path("", CookieStandListView.as_view(), name="cookiestand_list"),
     path("<int:pk>/", CookieStandDetailView.as_view(), name="cookiestand_detail"),
 ]
+
