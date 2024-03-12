@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import SunburstListView, SunburstDetailView
+from .views import ProjectListView, SurveyCreateView
+
 
 urlpatterns = [
-    path("", SunburstListView.as_view(), name="sunburst_list"),
-    path("<int:pk>/", SunburstDetailView.as_view(), name="sunburst_detail"),
+    path("", ProjectListView.as_view(), name="project_list"),
+    path("survey_create/", SurveyCreateView.as_view(), name="survey_create"),
+
 ]
