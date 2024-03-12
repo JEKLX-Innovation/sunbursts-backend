@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from .models import Sunburst, Participant, Element, Response
+from .models import Project, Participant, Element, Response
 from .permissions import IsOwnerOrReadOnly
 from .serializers import SunburstSerializer
 from .forms import SurveyForm
