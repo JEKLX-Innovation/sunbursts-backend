@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="space-y-8 p-8">
+  <h1 class="text-4xl text-center">Element List</h1>
+  <div
+    class="w-1/2 mx-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+  >
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Category
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Project Assignment
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Description
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Select
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for element in elements %}
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ element.name }}
+              </th>
+              <td class="px-6 py-4">
+                  {{ element.category }}
+              </td>
+              <td class="px-6 py-4">
+                  {{ element.project_name }}
+              </td>
+              <td class="px-6 py-4">
+                  {{ element.description }}
+              </td>
+              <td class="px-6 py-4">
+                  <input type="checkbox" name="select" id="select" class="form-checkbox text-blue-600 dark:text-blue-500 hover:underline">
+              </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+{% endblock content %}
