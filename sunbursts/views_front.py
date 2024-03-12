@@ -10,14 +10,14 @@ class ElementTableView(LoginRequiredMixin, ListView):
     model = Element
     context_object_name = "elements"
 
-class SurveyView(LoginRequiredMixin, CreateView, UpdateView):
+class SurveyView(CreateView, UpdateView):
     template_name = "admin/survey.html"
     model = Survey
     fields = "__all__"
     context_object_name = "survey"
     def survey_view(request, survey_id):
         survey_instance = Survey.objects.get(pk=survey_id)
-        return render(request, 'survey.html', {'survey_instance': survey_instance})
+        return render(request, 'admin/survey.html', {'survey_instance': survey_instance})
 
     # success_url = reverse_lazy("thank_you")
     # lookup_field = 'unique_link'
