@@ -26,18 +26,15 @@ class HomeView(ListView):
 
 
 class GraphListView(LoginRequiredMixin, ListView):
-    template_name = "admin/graph.html"  # Use the admin/graph.html template
+    template_name = "admin/graph.html"  
     model = Project
     context_object_name = "projects"
 
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            # Call the function to generate the sunburst plot
             graph_buffer = generate_graph()
 
-            # Encode the graph image to base64
             graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
 
-            # Pass the plot data to the template context
             context['graph'] = graph_base64
             return context
