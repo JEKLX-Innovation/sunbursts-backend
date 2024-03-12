@@ -7,13 +7,7 @@
     <h1>Survey Form</h1>
     <form method="POST">
         {% csrf_token %}
-        <ul>
-            {% for element in form.selected_elements %}
-                <li>{{ element }}</li>
-            {% endfor %}
-        </ul>
-        <label for="id_points">Points:</label>
-        {{ form.points }}
+        {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
 </body>

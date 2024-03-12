@@ -11,3 +11,4 @@ class SurveyForm(forms.Form):
             required=True
         )
         self.fields['points'] = forms.IntegerField()
+
