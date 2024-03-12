@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="space-y-8 p-8">
-  <h1 class="text-4xl text-center">Element List</h1>
+  <h1 class="text-4xl text-center">Element Table</h1>
   <div
     class="w-1/2 mx-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
   >
@@ -53,19 +53,4 @@
   </table>
 </div>
 
-
 {% endblock content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Survey Form</title>
-</head>
-<body>
-    <h1>Survey Form</h1>
-    <form method="POST">
-        <!-- {% csrf_token %} -->
-        {{ form }}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>

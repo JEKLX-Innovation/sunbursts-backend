@@ -5,8 +5,8 @@ from .models import Project, Element, Survey
 from django.shortcuts import render
 
 
-class ElementListView(LoginRequiredMixin, ListView):
-    template_name = "admin/element_list.html"
+class ElementTableView(LoginRequiredMixin, ListView):
+    template_name = "admin/element_table.html"
     model = Element
     context_object_name = "elements"
 
