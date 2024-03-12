@@ -12,3 +12,5 @@ class SurveyForm(forms.Form):
         )
         self.fields['points'] = forms.IntegerField()
 
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField()

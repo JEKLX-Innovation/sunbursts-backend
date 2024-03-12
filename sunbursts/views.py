@@ -2,8 +2,7 @@ from django.db import transaction
 from django.http import Http404
 from django.shortcuts import render, redirect
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
-from .models import Sunburst, Participant, Element, Response
+from .models import Project, Participant, Element, Response
 from .permissions import IsOwnerOrReadOnly
 from .serializers import SunburstSerializer
 from .forms import SurveyForm
@@ -23,8 +22,7 @@ def survey_form(request, unique_link):
     except Participant.DoesNotExist:
         raise Http404("Participant does not exist")
 
-    # Example of filtering elements; adjust the filter as per your requirements.
-    elements = Element.objects.filter(is_active=True)  # Assuming there's an 'is_active' field.
+    elements = Element.objects.filter(is_active=True) 
 
     if request.method == 'POST':
         form = SurveyForm(request.POST, elements=elements)
