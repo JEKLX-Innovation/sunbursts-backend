@@ -2,7 +2,6 @@
 # from django.http import Http404
 # from django.shortcuts import render, redirect
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
 from .models import Project, Survey
 from .permissions import IsOwnerOrReadOnly
 from .serializers import ProjectSerializer, SurveySerializer
@@ -19,6 +18,9 @@ class ProjectDetailView(RetrieveUpdateDestroyAPIView):
 class SurveyCreateView(ListCreateAPIView):
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
+
+
+
 
 # def survey_form(request, unique_link):
 #     try:
