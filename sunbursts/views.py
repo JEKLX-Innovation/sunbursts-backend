@@ -9,13 +9,11 @@ from .serializers import SunburstSerializer
 from .forms import SurveyForm
 
 class SunburstListView(ListCreateAPIView):
-    queryset = Sunburst.objects.all()
+    queryset = Project.objects.all()
     serializer_class = SunburstSerializer
-
-
 class SunburstDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrReadOnly,)
-    queryset = Sunburst.objects.all()
+    queryset = Project.objects.all()
     serializer_class = SunburstSerializer
 
 

@@ -1,21 +1,24 @@
-from django.contrib.auth import get_user_model
 from django.db import models
-from django.urls import reverse
+import uuid
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Project(models.Model):
+    name = models.CharField(max_length=255)
+    goal = models.TextField()
 
-class Sunburst(models.Model):
-    location = models.CharField(max_length=256)
-    owner = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, null=True, blank=True
-    )
-    description = models.TextField(blank=True)
-    hourly_sales = models.JSONField(default=list, null=True)
-    minimum_customers_per_hour = models.IntegerField(default=0)
-    maximum_customers_per_hour = models.IntegerField(default=0)
-    average_sunburst_per_sale = models.FloatField(default=0)
+class Participant(models.Model):
+    project_name= models.ForeignKey(Project, on_delete=models.CASCADE)
+    participant_name = models.CharField(max_length=255)
+    participant_email = models.EmailField()
+    unique_link = models.UUIDField(default=uuid.uuid4, editable=False)
 
-    def __str__(self):
-        return self.location
+class Element(models.Model):
+    name = models.CharField(max_length=255)
 
-    def get_absolute_url(self):
-        return reverse('sunburst_detail', args=[str(self.id)])
+class Response(models.Model):
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    element = models.ForeignKey(Element, on_delete=models.CASCADE)
+    weighting_input = models.IntegerField(default=0)
+    trend_input = models.IntegerField(default=0)
+    readiness_input = models.IntegerField(default=0, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+

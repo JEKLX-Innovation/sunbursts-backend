@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Sunburst
+from .models import Project
 
 # Register your models here.
-admin.site.register(Sunburst)
+admin.site.register(Project)
