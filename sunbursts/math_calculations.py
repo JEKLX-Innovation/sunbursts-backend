@@ -21,4 +21,12 @@ votes = len(unique_entry_ids)
 total_votes = len(df)
 # print("Total Votes:", total_votes)
 
+# Avg Points
+# "=IFERROR(('Participant 1'!Weight+'Participant 2'!Weight)/TotalVotes,"")"
+# element_weights = df.groupby('Element')['Weighting'].sum()
+avg_points= df.groupby('Element')['Weighting'].sum()/votes
+# print("Avg Points:", avg_points)
+
+
+
 
