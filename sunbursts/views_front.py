@@ -14,10 +14,22 @@ class ElementTableView(LoginRequiredMixin, ListView):
     context_object_name = "elements"
 
 class SurveyView(CreateView, UpdateView):
+    # Assuming each project has one survey for simplification
     template_name = "admin/survey.html"
     model = Survey
     fields = "__all__"
 
+    def survey_detail(request, pk):
+        survey = get_object_or_404(Survey.objects.prefetch_related('elements'), pk=pk)
+        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
+        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
+
+        context = {
+            'survey': survey,
+            # 'survey_responses': survey_responses,
+            # 'element_responses': element_responses,
+        }
+        return render(request, 'survey.html', context)
     # def survey_view(request, survey_id):
     #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
     #     return render(request, 'admin/survey.html', {'survey': survey})
