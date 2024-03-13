@@ -20,24 +20,25 @@ class Participant(models.Model):
         return self.participant_name
 
 
-class Survey(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
-    # selected_elements = models.ManyToManyField(Element)
-    user_selections_max = models.IntegerField(default=10)
-    weighting_max = models.IntegerField(default=20)
-    readiness_score_max = models.IntegerField(default=10)
-    def __str__(self) -> Any:
-        return self.project.name
-
-
 class Element(models.Model):
-    # project_name = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    # survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True)
+    ref_number = models.CharField(max_length=255, blank=True, null=True)
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255, blank=True, null=True)
     category = models.CharField(max_length=25, blank=True, null=True)
     def __str__(self) -> Any:
         return self.name
+
+
+class Survey(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    selected_elements = models.ManyToManyField(Element)
+    user_selections_max = models.IntegerField(default=10)
+    weighting_max = models.IntegerField(default=20)
+    readiness_score_max = models.IntegerField(default=10)
+    def __str__(self) -> Any:
+        return self.project.name
 
 
 class SurveyResponse(models.Model):

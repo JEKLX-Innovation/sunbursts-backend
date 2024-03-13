@@ -23,3 +23,7 @@ class SurveyCreateView(RetrieveUpdateDestroyAPIView):
 class ElementListView(ListCreateAPIView):
     queryset = Element.objects.all()
     serializer_class = ElementSerializer
+
+class ElementDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Element.objects.all()
+    serializer_class = ElementSerializer
