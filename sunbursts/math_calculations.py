@@ -80,3 +80,24 @@ score=point_score+need_score
 # print("Score:", score)
 
 
+normalized_vote = round(normalized_vote, 2)
+
+normalized_points = normalized_points.round(2)
+
+avg_readiness = round(avg_readiness, 2)
+
+trend_diff = round(trend_diff, 2)
+
+point_score = round(point_score, 2)
+
+need_score = round(need_score, 2)
+
+score = round(score, 2)
+
+print("Normalized Vote:", normalized_vote)
+print("Normalized Points:", normalized_points)
+print("Avg Readiness:", avg_readiness)
+print("Trend Difference:", trend_diff)
+print("Point Score:", point_score)
+print("Need Score:", need_score)
+print("Score:", score)
