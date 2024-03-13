@@ -1,8 +1,12 @@
 import pandas as pd
+# from .models import SurveyResponse
+
 
 # Load the CSV file into a DataFrame
+# survey_responses = SurveyResponse.objects.all()
 df = pd.read_csv('MathData.csv')  # Replace 'MathData.csv' with the actual file path
-
+# df = pd.DataFrame(list(survey_responses.values()))
+# print(df)
 # Extract the 'Weighting', 'Readiness', 'Now', 'Needed', and 'EntryID' columns
 extracted_columns = df[['Participant_ID', 'Weighting', 'Readiness', 'Now', 'Needed','Element','Category']]
 
