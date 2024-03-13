@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
-from .models import Project, Element, Survey
+from .models import Project, Element, Survey, SurveyResponse, ElementResponse, Participant
 from .graph import generate_graph
 from django.http import HttpResponse
 import base64
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 
 class ElementTableView(LoginRequiredMixin, ListView):
@@ -17,10 +17,13 @@ class SurveyView(CreateView, UpdateView):
     template_name = "admin/survey.html"
     model = Survey
     fields = "__all__"
+
+    # def survey_view(request, survey_id):
+    #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
+    #     return render(request, 'admin/survey.html', {'survey': survey})
+
     context_object_name = "survey"
-    def survey_view(request, survey_id):
-        survey_instance = Survey.objects.get(pk=survey_id)
-        return render(request, 'admin/survey.html', {'survey_instance': survey_instance})
+
 
     # success_url = reverse_lazy("thank_you")
     # lookup_field = 'unique_link'
