@@ -12,7 +12,7 @@ class Project(models.Model):
 
 
 class Participant(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name='participants')
     participant_name = models.CharField(max_length=255)
     participant_email = models.EmailField()
     unique_link = models.UUIDField(default=uuid.uuid4, editable=False)
@@ -21,7 +21,7 @@ class Participant(models.Model):
 
 
 class Element(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name='elements')
     # survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True)
     ref_number = models.CharField(max_length=255, blank=True, null=True)
     name = models.CharField(max_length=255)
@@ -32,7 +32,7 @@ class Element(models.Model):
 
 
 class Survey(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True, related_name='surveys')
     selected_elements = models.ManyToManyField(Element)
     user_selections_max = models.IntegerField(default=10)
     weighting_max = models.IntegerField(default=20)
@@ -42,7 +42,7 @@ class Survey(models.Model):
 
 
 class SurveyResponse(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True, related_name='survey_responses')
     # responses = models.ForeignKey(Response, on_delete=models.CASCADE, null=True, blank=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self) -> Any:
@@ -51,9 +51,10 @@ class SurveyResponse(models.Model):
 
 class ElementResponse(models.Model):
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
-    survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, null=True, blank=True)
-    weighting_input = models.IntegerField(default=0)
-    trend_input = models.IntegerField(default=0)
+    survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, null=True, blank=True, related_name='element_responses')
     readiness_input = models.IntegerField(default=0, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    weighting_input = models.IntegerField(default=0)
+    trend_now = models.IntegerField(default=0)
+    trend_needed = models.IntegerField(default=0)
     def __str__(self) -> Any:
         return self.element.name

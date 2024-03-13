@@ -2,54 +2,66 @@
 
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}Sunburst{% endblock %}</title>
- <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-green-50">
-<header>
-  <nav class="bg-gray-900 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
-        <div class="container flex flex-wrap items-center justify-between mx-auto">
-          <a href="{% url 'home' %}">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Sunburst_pattern.svg" class="p-3 h-12 bg-white rounded" alt="Logo" />
-          </a>
-          <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
-            <ul class="flex flex-col m≈t-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+
+<body class="bg-grey-50">
+  <header>
+    <nav class="bg-gray-400
+  text-sm text-white
+  fixed
+  inset-x-0
+  top-0
+  p-2">
+      <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <a href="#">
+          <img src="{% static 'bespace_logo_transp_bg.png' %}" class="p-3 h-12 rounded"
+            alt="BeSpace Logo" />
+        </a>
+        <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+          <ul class="flex flex-col m≈t-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             {% if request.user.is_authenticated %}
             <li>
-                <a href="{% url 'logout' %}" class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent  md:p-0 dark:text-white" aria-current="page">Log Out</a>
-              </li>
-              {% else %}
-              <li>
-                <a href="{% url 'login' %}" class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent  md:p-0 dark:text-white" aria-current="page">Log In</a>
-              </li>
+              <a href="{% url 'logout' %}"
+                class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent  md:p-0 dark:text-white"
+                aria-current="page">Log Out</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'login' %}"
+                class="block py-2 pl-3 pr-4 text-white bg-green-700 rounded md:bg-transparent  md:p-0 dark:text-white"
+                aria-current="page">Log In</a>
+            </li>
             {% endif %}
 
-            </ul>
-          </div>
+          </ul>
         </div>
-      </nav>
-</header>
-<main>
-<div class="container mx-auto mt-4">
-  {% block content %}
-  {% endblock content %}
-</div>
-</main>
-<footer
-      class="bg-gray-900
+      </div>
+    </nav>
+  </header>
+  <main class="mt-16 mb-16">
+    <div class="container mx-auto mt-4">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </main>
+  <footer class="bg-gray-400
              text-sm text-white
              fixed
              inset-x-0
              bottom-0
              p-2">
-      &copy; CF 2024
-    </footer>
+    Systems Change Analysis, BeSpace Consulting 2024
+  </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </body>
+
 </html>
