@@ -1,4 +1,4 @@
-Category,Element,EntryID,Weighting,Readiness,Now,Needed
+Category,Element,Participant_ID,Weighting,Readiness,Now,Needed
 E,Reputation,1,10,1,-1,2
 E,Reputation,2,8,2,0,1
 E,Investments in Infrastructure,1,2,2,-2,2
