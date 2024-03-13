@@ -10,29 +10,30 @@ extracted_columns = df[['Participant_ID', 'Weighting', 'Readiness', 'Now', 'Need
 # print(extracted_columns)
 
 # Get the unique EntryIDs
-unique_participant_ids = df['Participant_ID'].unique()
+# unique_participant_ids = df['Participant_ID'].unique()
+
 # total votes per element
-total_votes = len(unique_participant_ids)
-# print("Total Votes:", total_votes)
+total_votes = df.groupby('Element')['Participant_ID'].nunique()
+print("Total Votes:", total_votes)
 
 # Normalized Vote
 # "=ARRAY_CONSTRAIN(ARRAYFORMULA((TotalVotes-MIN(TotalVotesColumn))/(MAX(TotalVotesColumn-MIN(TotalVotesColumn)))), 1, 1)"
 # TotalVotes=votes
 # TotalVotesColumn=total_votes
 total_votes_column = df.groupby('Element')['Participant_ID'].nunique()
-# print("Total Votes Column:", total_votes_column)
+print("Total Votes Column:", total_votes_column)
 # division by zero error
 # normalized_vote = (total_votes - min(total_votes_column)) / (max(total_votes_column) - min(total_votes_column))
 range_total_votes_column = max(total_votes_column) - min(total_votes_column)
 
-if range_total_votes_column == 0:
-    normalized_vote = 1
-else:
-    # Calculate the normalized vote
-    normalized_vote = (total_votes - min(total_votes_column)) / range_total_votes_column
+# if range_total_votes_column == 0:
+#     normalized_vote = 1
+# else:
+#     # Calculate the normalized vote
+normalized_vote = (total_votes - min(total_votes_column)) / range_total_votes_column
 
 # Print the normalized vote
-# print("Normalized Vote:", normalized_vote)
+print("Normalized Vote:", normalized_vote)
 
 # Avg Points
 # "=IFERROR(('Participant 1'!Weight+'Participant 2'!Weight)/TotalVotes,"")"
@@ -43,12 +44,10 @@ avg_points= df.groupby('Element')['Weighting'].sum()/total_votes
 
 # Normalized Points
 # "=IFERROR(((AvgPoints-MIN(AvgPointsColumn))/MAX(AvgPointsColumn)),"")"
-
 avg_points_column=avg_points.sum()
 # print("Avg Points Column:", avg_points_column)
-
 normalized_points = (avg_points-(avg_points.min()))/(avg_points.max())
-# print("Normalized Points:", normalized_points)
+print("Normalized Points:", normalized_points)
 
 
 # Avg Readiness
@@ -116,6 +115,7 @@ score = round(score, 2)
 # new_df = new_df.drop_duplicates()
 
 # print(new_df)
+
 data = []
 for cat, elem, scr, nscore, pscore in zip(df['Category'], df['Element'], score, need_score, point_score):
     data.append({'Category': cat, 'Element': elem, 'Point Score': pscore, 'Need Score': nscore, 'Score': scr})
@@ -124,7 +124,9 @@ new_df = pd.DataFrame(data)
 
 new_df = new_df.drop_duplicates()
 
-print(new_df)
+
+
+# print(new_df)
 
 
 
