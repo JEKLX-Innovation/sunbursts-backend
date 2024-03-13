@@ -28,5 +28,14 @@ avg_points= df.groupby('Element')['Weighting'].sum()/votes
 # print("Avg Points:", avg_points)
 
 
+# Normalized Points
+# "=IFERROR(((AvgPoints-MIN(AvgPointsColumn))/MAX(AvgPointsColumn)),"")"
+
+avg_points_column=avg_points.sum()
+# print("Avg Points Column:", avg_points_column)
+
+normalized_points = (avg_points-(avg_points.min()))/(avg_points.max())
+# print("Normalized Points:", normalized_points)
+
 
 
