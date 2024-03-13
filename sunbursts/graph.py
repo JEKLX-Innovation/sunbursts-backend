@@ -39,7 +39,7 @@ def generate_graph():
     plt.switch_backend('Agg')
     fig, ax = plt.subplots(figsize=(20, 10), subplot_kw={"projection": "polar"})
     ax.set_theta_offset(np.pi / 2)
-    ax.set_ylim(-220, 220)  # Adjusting ylim to accommodate category labels below
+    ax.set_ylim(-220, 420)  # Adjusting ylim to accommodate category labels below
     ax.set_frame_on(False)
     ax.xaxis.grid(False)
     ax.yaxis.grid(False)
