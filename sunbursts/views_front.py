@@ -9,13 +9,13 @@ from django.shortcuts import render, get_object_or_404
 
 
 class ElementTableView(LoginRequiredMixin, ListView):
-    template_name = "admin/element_table.html"
+    template_name = "participants/element_table.html"
     model = Element
     context_object_name = "elements"
 
 class SurveyView(CreateView, UpdateView):
     # Assuming each project has one survey for simplification
-    template_name = "admin/survey.html"
+    template_name = "participants/survey.html"
     model = Survey
     fields = "__all__"
 
@@ -29,7 +29,7 @@ class SurveyView(CreateView, UpdateView):
             # 'survey_responses': survey_responses,
             # 'element_responses': element_responses,
         }
-        return render(request, 'survey.html', context)
+        return render(request, 'participants/survey.html', context)
     # def survey_view(request, survey_id):
     #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
     #     return render(request, 'admin/survey.html', {'survey': survey})
