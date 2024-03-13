@@ -38,4 +38,14 @@ normalized_points = (avg_points-(avg_points.min()))/(avg_points.max())
 # print("Normalized Points:", normalized_points)
 
 
+# Avg Readiness
+# "=IFERROR(('Participant 1'!ReadinessValue+'Participant 2'!ReadinessValue)/$TotalVotes,"")"
+readiness_value = df.groupby('Element')['Readiness'].sum()/avg_points
+# print("Readiness Value:", readiness_value)
+
+# Tred Dif
+# "=IF($TotalVotes<>0,IFERROR(('Participant 1'!TrendDif+'Participant 2'!TrendDif)/$TotalVotes,0),"")"
+
+trend_dif = ((df['Now'] - df['Needed']).abs()).groupby(df['Element']).sum() / votes
+print("Trend Difference:", trend_dif)
 
