@@ -1,15 +1,12 @@
 from django.contrib import admin
-from django.urls import include, path, re_path
-from django.shortcuts import redirect
+from django.urls import include, path
 from rest_framework_simplejwt import views as jwt_views
 from .views import MyTokenObtainPairView
 from django.views.generic.base import TemplateView
 from sunbursts.views_front import HomeView
 from django.contrib.auth.views import LogoutView
-
 urlpatterns = [
-    # Redirects the 'admin/' URL to the root URL
-    re_path(r'^admin/$', lambda request: redirect('/', permanent=False)),
+    path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path(
         "api/token/",
@@ -26,6 +23,6 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     # Make admin the first page a user goes to
-    # path("", admin.site.urls),
+    path("", admin.site.urls),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
