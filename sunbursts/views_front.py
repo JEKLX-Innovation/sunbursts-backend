@@ -20,29 +20,24 @@ class SurveyView(CreateView, UpdateView):
     fields = "__all__"
 
     def survey_detail(request, pk):
-        survey = get_object_or_404(Survey.objects.prefetch_related('elements'), pk=pk)
+        survey = get_object_or_404(Survey.objects.prefetch_related('elements', 'participants'), pk=pk)
         context = {
             'survey': survey,
         }
         return render(request, 'participants/survey.html', context)
 
 
-
-
 class SurveyResponseView(CreateView):
-    # template_name = "participants/survey_response.html"
     model = SurveyResponse
     fields = ['element_responses']
     # context_object_name = "survey_response"
     success_url = reverse_lazy("thank_you")
 
     def post(self, request, *args, **kwargs):
-        # Assuming the participant and survey are determined in some way (e.g., session, hidden input)
-        # participant_id = request.POST.get('participant_id')
+        participant_id = request.POST.get('participant_id')
         survey_id = request.POST.get('survey_id')
-        print("survey_id, POST:", survey_id)
-        survey_response = SurveyResponse.objects.create(survey_id=survey_id)
-        print("survey_id, POST:", survey_id)
+        print("survey_id, participant_id POST:", survey_id, participant_id)
+        survey_response = SurveyResponse.objects.create(survey_id=survey_id, participant_id=participant_id)
         print("survey_response, POST:", request.POST)
 
         # Iterate through the submitted elements
@@ -52,22 +47,26 @@ class SurveyResponseView(CreateView):
                 print("key, value, element_id:", field_name, value, element_id)
 
                 if field_name == 'selected' and value == 'on':
-                    value = 1
-                elif field_name == 'selected':
-                    value = 0
-                else:
-                    try:
-                        value = int(value) if value.strip() != '' else 0
-                    except ValueError:
-                        value = None
-                # Create or update the ElementResponse
-                print("key, value, element_id:", field_name, value, element_id)
-
-                ElementResponse.objects.update_or_create(
+                    ElementResponse.objects.update_or_create(
                     survey_response=survey_response,
                     element_id=element_id,
-                    defaults={field_name: value}
-                )
+                    selected=True
+                    )
+
+                elif field_name == 'selected':
+                    value = False
+                else:
+                    try:
+                        value = int(value)
+                        ElementResponse.objects.update_or_create(
+                        survey_response=survey_response,
+                        element_id=element_id,
+                        defaults={field_name: value})
+                    # if value.strip() != '' else 0
+                    except ValueError:
+                        value = None
+                print("key, value, element_id:", field_name, value, element_id)
+
         return redirect(self.success_url)
 
 
