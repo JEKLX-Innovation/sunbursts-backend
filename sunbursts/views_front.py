@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from .models import Project, Element, Survey, SurveyResponse, ElementResponse, Participant
-from .graph import generate_graph
+from .graph import generate_graph, create_df
 from django.http import HttpResponse
 import base64
 from django.shortcuts import render, get_object_or_404, redirect
@@ -88,6 +88,7 @@ class GraphListView(LoginRequiredMixin, ListView):
             graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
 
             context['graph'] = graph_base64
+            
             return context
 
 
@@ -101,4 +102,7 @@ class GraphListView(LoginRequiredMixin, ListView):
             # 'survey_responses': survey_responses,
             # 'element_responses': element_responses,
         }
+        
         return render(request, 'math_calculations.html', context)
+    
+    
