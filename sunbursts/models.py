@@ -52,9 +52,9 @@ class SurveyResponse(models.Model):
 class ElementResponse(models.Model):
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
     survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, null=True, blank=True, related_name='element_responses')
-    readiness_input = models.IntegerField(default=0, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
-    weighting_input = models.IntegerField(default=0)
-    trend_now = models.IntegerField(default=0)
-    trend_needed = models.IntegerField(default=0)
+    readiness = models.IntegerField(default=0, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    weighting = models.IntegerField(default=0)
+    trendnow = models.IntegerField(default=0)
+    trendneeded = models.IntegerField(default=0)
     def __str__(self) -> Any:
         return self.element.name

@@ -24,6 +24,6 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     # Make admin the first page a user goes to
-    path("", admin.site.urls),
+    # path("", admin.site.urls),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]

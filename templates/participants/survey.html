@@ -4,58 +4,66 @@
 
 <div class="space-y-8 p-8">
   <h1 class="text-4xl text-center">Survey: {{ survey.project.name }}</h1>
-  <div
-    class="w-1/2 mx-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-  >
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-              <th scope="col" class="px-6 py-3">
-                  Element
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Select up to {{ survey.user_selections_max }}
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Weighting
-            </th>
-              <th scope="col" class="px-6 py-3">
-                  Readiness
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Trend (now)
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Trend (needed)
-              </th>
-          </tr>
-      </thead>
-      <tbody>
-        {% for element in survey.selected_elements.all %}
-          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ element.name }}
-              </th>
-              <td class="px-6 py-4">
-                <input type="checkbox" name="select" id="select" class="form-checkbox text-blue-600 dark:text-blue-500 hover:underline">
-              </td>
-              <td class="px-6 py-4">
-                <input type="number" name="weighting" id="weighting" class="form-input text-blue-600 dark:text-blue-500 hover:underline" max="{{ survey.weighting_max }}" value="{{ survey.weighting_default }}">
-              </td>
-              <td class="px-6 py-4">
-                <input type="number" name="readiness" id="readiness" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
-              </td>
-              <td class="px-6 py-4">
-                <input type="number" name="trend now" id="trend now" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
-              </td>
-              <td class="px-6 py-4">
-                <input type="number" name="trend needed" id="trend needed" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
-          </tr>
-        {% endfor %}
-      </tbody>
-  </table>
+  <form method="post" action="{% url 'survey_response' %}">
+    {% csrf_token %}
+    <div
+      class="w-1/2 mx-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Element
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Select up to {{ survey.user_selections_max }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Weighting
+                  </th>
+                    <th scope="col" class="px-6 py-3">
+                        Readiness
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Trend (now)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Trend (needed)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for element in survey.selected_elements.all %}
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {{ element.name }}
+                  </th>
+                  <td class="px-6 py-4">
+                    <input type="checkbox" name="element_{{ element.id }}_select" class="form-checkbox text-blue-600 dark:text-blue-500 hover:underline">
+                  </td>
+                  <td class="px-6 py-4">
+                    <input type="number" name="element_{{ element.id }}_weighting" class="form-input text-blue-600 dark:text-blue-500 hover:underline" max="{{ survey.weighting_max }}" value="{{ survey.weighting_default }}">
+                  </td>
+                  <td class="px-6 py-4">
+                    <input type="number" name="element_{{ element.id }}_readiness" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
+                  </td>
+                  <td class="px-6 py-4">
+                    <input type="number" name="element_{{ element.id }}_trendnow" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
+                  </td>
+                  <td class="px-6 py-4">
+                    <input type="number" name="element_{{ element.id }}_trendneeded" class="form-input text-blue-600 dark:text-blue-500 hover:underline">
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Submit Survey</button>
+    </div>
+  </form>
 </div>
 
 {% endblock content %}
