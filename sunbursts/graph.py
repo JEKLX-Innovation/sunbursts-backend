@@ -2,10 +2,33 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import io
+from .models import SunburstElement
+from django.shortcuts import render, get_object_or_404, redirect
+
+def create_df():
+    sunburst_elements = SunburstElement.objects.all()
+    # project = get_object_or_404(SunburstElement.objects.prefetch_related('projects'), pk=pk)
+    # context = {'project': project}
+    print("Survey Responses:", sunburst_elements)
+    data = []
+    for sunburst_element in sunburst_elements:
+        data.append({
+            'Element': sunburst_element.element_name,
+            'Point Score': sunburst_element.point_score,
+            'Need Score': sunburst_element.need_score,
+            'Score': sunburst_element.score,
+            'Category': sunburst_element.category,
+        })
+    df_data = pd.DataFrame(data)
+    # print("df", df_data)
+    return df_data
+    # return render(request, context)
+
 
 def generate_graph():
+    df = create_df()
     # Read data from CSV file
-    df = pd.read_csv('StakeholderInputAnalysis.xlsx - Mock Data.csv')
+    # df = pd.read_csv('StakeholderInputAnalysis.xlsx - Mock Data.csv')
 
     # Sort and process the dataset
     df_sorted = (
@@ -18,6 +41,7 @@ def generate_graph():
     VALUES = df_sorted["Score"].values
     LABELS = df_sorted["Element"].values
     GROUP = df_sorted["Category"].values
+    print(GROUP)
 
     # Calculation of angles and indexing needs to be adjusted for the data structure
     PAD = 3  # Keeping the padding the same for consistency
@@ -83,7 +107,7 @@ def generate_graph():
 
     # Adjusting text and reference lines as before
     offset = 0
-    for group, size in zip(["E", "BR", "W", "S"], GROUPS_SIZE):
+    for group, size in zip(["BR", "E", "S", "W"], GROUPS_SIZE):
         start_angle = ANGLES[offset + PAD]
         end_angle = ANGLES[offset + size + PAD - 1]
         num_bars = len(np.unique(df_sorted["Element"]))
