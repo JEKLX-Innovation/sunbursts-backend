@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Participant, Element, SurveyResponse, Survey, ElementResponse
+from .models import Project, Participant, Element, SurveyResponse, Survey, ElementResponse, Sunburst
 from django.urls import path
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -30,10 +30,12 @@ class ProjectAdmin(admin.ModelAdmin):
                 io_string = io.StringIO(data_set)
                 next(io_string)
                 for row in csv.reader(io_string, delimiter=',', quotechar='"'):
-                    _, created = Element.objects.update_or_create(
-                        ref_number=row[0],
-                        category=row[1],
-                        name=row[2],
+                    _, created = Sunburst.objects.update_or_create(
+                        element_name=row[0],
+                        point_score=row[1],
+                        need_score=row[2],
+                        score=row[3],
+                        category=row[4],
 
                     )
                 messages.success(request, "Your CSV file has been imported")
@@ -57,3 +59,5 @@ admin.site.register(ElementResponse)
 admin.site.register(SurveyResponse)
 
 admin.site.register(Survey)
+
+admin.site.register(Sunburst)
