@@ -25,12 +25,14 @@ class ProjectAdmin(admin.ModelAdmin):
         if request.method == "POST":
             csv_form = CSVImportForm(request.POST, request.FILES)
             if csv_form.is_valid():
+                project = csv_form.cleaned_data['project']
                 csv_file = request.FILES['csv_file']
                 data_set = csv_file.read().decode('UTF-8')
                 io_string = io.StringIO(data_set)
                 next(io_string)
                 for row in csv.reader(io_string, delimiter=',', quotechar='"'):
                     _, created = Sunburst.objects.update_or_create(
+                        project=project,
                         element_name=row[0],
                         point_score=row[1],
                         need_score=row[2],
