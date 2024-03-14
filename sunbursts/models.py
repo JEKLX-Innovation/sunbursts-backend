@@ -61,11 +61,17 @@ class ElementResponse(models.Model):
     trendneeded = models.IntegerField(default=0)
     def __str__(self) -> Any:
         return self.element.name
-    
-# class Graph(models.Model):
-#     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='graph')
-#     image = models.ImageField(upload_to='graph/')
-#     description = models.TextField()
 
-#     def __str__(self):
-#         return f"Graph for {self.project.name}"
+
+class SunburstElement(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    element_name = models.CharField(max_length=255)
+    point_score = models.FloatField(default=0)
+    need_score = models.FloatField(default=0)
+    score = models.FloatField(default=0)
+    category = models.CharField(max_length=25, blank=True, null=True)
+
+    def __str__(self) -> Any:
+        if self.project:
+            return self.project.name
+        return "Sunburst needs attachment to Project"

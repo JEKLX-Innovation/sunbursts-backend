@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 from django.urls import reverse_lazy
 from .models import Project, Element, Survey, SurveyResponse, ElementResponse, Participant
-from .graph import generate_graph
+from .graph import generate_graph, create_df
 from django.http import HttpResponse
 import base64
 from django.shortcuts import render, get_object_or_404, redirect
@@ -21,17 +21,14 @@ class SurveyView(CreateView, UpdateView):
     fields = "__all__"
 
     def survey_detail(request, pk):
-        survey = get_object_or_404(Survey.objects.prefetch_related('elements'), pk=pk)
+        survey = get_object_or_404(Survey.objects.prefetch_related('elements', 'participants'), pk=pk)
         context = {
             'survey': survey,
         }
         return render(request, 'participants/survey.html', context)
 
 
-
-
 class SurveyResponseView(CreateView):
-    # template_name = "participants/survey_response.html"
     model = SurveyResponse
     fields = ['element_responses']
     # context_object_name = "survey_response"
@@ -41,7 +38,7 @@ class SurveyResponseView(CreateView):
         participant_id = request.POST.get('participant_id')
         survey_id = request.POST.get('survey_id')
         print("survey_id, participant_id POST:", survey_id, participant_id)
-        survey_response = SurveyResponse.objects.create(survey_id=survey_id)
+        survey_response = SurveyResponse.objects.create(survey_id=survey_id, participant_id=participant_id)
         print("survey_response, POST:", request.POST)
         # Iterate through the submitted elements
         for key, value in request.POST.items():
@@ -54,6 +51,7 @@ class SurveyResponseView(CreateView):
                     element_id=element_id,
                     selected=True
                     )
+
                 elif field_name == 'selected':
                     value = False
                 else:
@@ -66,8 +64,8 @@ class SurveyResponseView(CreateView):
                     # if value.strip() != '' else 0
                     except ValueError:
                         value = None
-                # Create or update the ElementResponse
                 print("key, value, element_id:", field_name, value, element_id)
+
         return redirect(self.success_url)
 
 
@@ -89,6 +87,7 @@ class GraphListView(LoginRequiredMixin, ListView):
             graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
 
             context['graph'] = graph_base64
+            
             return context
 
 
@@ -99,6 +98,8 @@ class GraphListView(LoginRequiredMixin, ListView):
             'survey': surveyresponse,
         }
         return render(request, 'math_calculations.html', context)
+    
+    
 
 
 class ThankYouView(TemplateView):
