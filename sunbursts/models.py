@@ -63,7 +63,7 @@ class ElementResponse(models.Model):
         return self.element.name
 
 
-class Sunburst(models.Model):
+class SunburstElement(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     element_name = models.CharField(max_length=255)
     point_score = models.FloatField(default=0)
