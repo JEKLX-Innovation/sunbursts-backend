@@ -21,18 +21,11 @@ class SurveyView(CreateView, UpdateView):
 
     def survey_detail(request, pk):
         survey = get_object_or_404(Survey.objects.prefetch_related('elements'), pk=pk)
-        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
-        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
-
         context = {
             'survey': survey,
-            # 'survey_responses': survey_responses,
-            # 'element_responses': element_responses,
         }
         return render(request, 'participants/survey.html', context)
-    # def survey_view(request, survey_id):
-    #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
-    #     return render(request, 'admin/survey.html', {'survey': survey})
+
 
 
 
@@ -47,25 +40,36 @@ class SurveyResponseView(CreateView):
         # Assuming the participant and survey are determined in some way (e.g., session, hidden input)
         # participant_id = request.POST.get('participant_id')
         survey_id = request.POST.get('survey_id')
+        print("survey_id, POST:", survey_id)
         survey_response = SurveyResponse.objects.create(survey_id=survey_id)
+        print("survey_id, POST:", survey_id)
         print("survey_response, POST:", request.POST)
+
         # Iterate through the submitted elements
         for key, value in request.POST.items():
             if key.startswith('element_'):
                 _, element_id, field_name = key.split('_')
-                # Depending on your form structure, you might receive multiple values for checkboxes
-                # Here we just handle it as if it's a single value (e.g., for inputs)
-                value = request.POST.getlist(key)[0] if field_name == 'select' else value
+                print("key, value, element_id:", field_name, value, element_id)
+
+                if field_name == 'selected' and value == 'on':
+                    value = 1
+                elif field_name == 'selected':
+                    value = 0
+                else:
+                    try:
+                        value = int(value) if value.strip() != '' else 0
+                    except ValueError:
+                        value = None
                 # Create or update the ElementResponse
-                print("key, value:", field_name, value)
+                print("key, value, element_id:", field_name, value, element_id)
 
                 ElementResponse.objects.update_or_create(
                     survey_response=survey_response,
                     element_id=element_id,
                     defaults={field_name: value}
                 )
+        return redirect(self.success_url)
 
-        return redirect(self.get_success_url())
 
 class HomeView(ListView):
     template_name = "home.html"
