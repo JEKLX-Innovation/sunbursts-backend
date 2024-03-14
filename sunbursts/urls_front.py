@@ -1,6 +1,5 @@
 from django.urls import path
-from .views_front import ElementTableView, SurveyView, SurveyResponseView, ThankYouView, do_calculations
-
+from .views_front import ElementTableView, SurveyView, SurveyResponseView, ThankYouView, do_calculations, GraphListView
 urlpatterns = [
     path("elements/", ElementTableView.as_view(), name="element_table"),
     path("survey/<int:pk>/", SurveyView.as_view(), name="survey"),
