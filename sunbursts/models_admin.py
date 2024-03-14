@@ -9,6 +9,7 @@ from .models import SunburstElement
 
 class ProjectAdmin(admin.ModelAdmin):
     change_list_template = "admin/project_change_list.html"
+    change_form_template = "admin/project_change_form.html"
 
     def get_urls(self):
         urls = super().get_urls()
@@ -27,7 +28,7 @@ class ProjectAdmin(admin.ModelAdmin):
                 io_string = io.StringIO(data_set)
                 next(io_string)
                 for row in csv.reader(io_string, delimiter=',', quotechar='"'):
-                    _, created = Sunburst.objects.update_or_create(
+                    _, created = SunburstElement.objects.update_or_create(
                         project=project,
                         element_name=row[0],
                         point_score=row[1],
