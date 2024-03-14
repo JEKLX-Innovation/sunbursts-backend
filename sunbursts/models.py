@@ -43,11 +43,11 @@ class Survey(models.Model):
 
 class SurveyResponse(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True, related_name='survey_responses')
-    # responses = models.ForeignKey(Response, on_delete=models.CASCADE, null=True, blank=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self) -> Any:
-        return self.survey.project.name
-
+        if self.survey and self.survey.project:
+            return self.survey.project.name
+        return "Survey response without survey"
 
 class ElementResponse(models.Model):
     element = models.ForeignKey(Element, on_delete=models.CASCADE)

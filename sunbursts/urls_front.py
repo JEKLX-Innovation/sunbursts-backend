@@ -6,6 +6,6 @@ urlpatterns = [
     path("survey/<int:pk>/", SurveyView.as_view(), name="survey"),
     # path("survey/<uuid:unique_link>", survey_form, name="survey_form"),
     path('graph/', GraphListView.as_view(), name='graph'),
-    path('survey_response/', SurveyResponseView.as_view(), name='survey_response'),
+    path('surveyresponse/', SurveyResponseView.as_view(), name='surveyresponse'),
     path('thank_you/', GraphListView.as_view(), name='thank_you'),
 ]
