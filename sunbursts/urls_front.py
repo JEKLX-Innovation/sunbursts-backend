@@ -1,5 +1,5 @@
 from django.urls import path
-from .views_front import ElementTableView, SurveyView, SurveyResponseView, ThankYouView
+from .views_front import ElementTableView, SurveyView, SurveyResponseView, ThankYouView, do_calculations
 
 urlpatterns = [
     path("elements/", ElementTableView.as_view(), name="element_table"),
@@ -8,4 +8,6 @@ urlpatterns = [
     # path('graph/<int:pk>/', GraphListView.as_view(), name='graph'),
     path('survey_response/', SurveyResponseView.as_view(), name='survey_response'),
     path('thank_you/', ThankYouView.as_view(), name='thank_you'),  # Update this line
+    path('math_calculations/', do_calculations, name='math'),  # Update this line
+
 ]

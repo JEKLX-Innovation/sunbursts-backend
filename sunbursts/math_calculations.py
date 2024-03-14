@@ -2,59 +2,92 @@ from .models import SurveyResponse, ElementResponse
 
 import pandas as pd
 
-# Fetch survey responses and element responses from the database
-survey_responses = SurveyResponse.objects.all().prefetch_related('element_responses')
-data = []
-for survey_response in survey_responses:
-    for element_response in survey_response.element_responses.all():
-        data.append({
-            'Element': element_response.element.name,
-            'Participant_ID': survey_response.participant.id,
-            'Weighting': element_response.weighting,
-            'Readiness': element_response.readiness,
-            'Now': element_response.trendnow,
-            'Needed': element_response.trendneeded,
-            'Category': element_response.element.category
-        })
+def math_calculations():
+    survey_responses = SurveyResponse.objects.all().prefetch_related('element_responses')
+    print("Survey Responses:", survey_responses)
+    data = []
+    for survey_response in survey_responses:
+        for element_response in survey_response.element_responses.all():
+            data.append({
+                'Element': element_response.element.name,
+                'Participant': survey_response.survey,
+                'Weighting': element_response.weighting,
+                'Readiness': element_response.readiness,
+                'Now': element_response.trendnow,
+                'Needed': element_response.trendneeded,
+                'Category': element_response.element.category
+            })
+    df = pd.DataFrame(data)
 
-# Create a DataFrame from the fetched data
-df = pd.DataFrame(data)
+    participant_dfs = {}
 
-# Perform calculations
-total_votes = df.groupby('Element')['Participant_ID'].nunique()
-avg_points = df.groupby('Element')['Weighting'].sum() / total_votes
-avg_readiness = df.groupby('Element')['Readiness'].sum() / total_votes
-trend_diff = df.groupby('Element').apply(lambda x: (x['Now'] - x['Needed']).abs().sum()) / total_votes
-normalized_vote = (total_votes - total_votes.min()) / (total_votes.max() - total_votes.min())
-normalized_points = (avg_points - avg_points.min()) / (avg_points.max() - avg_points.min())
-point_score = (normalized_vote * 100) + (normalized_points * 100)
-need_score = (avg_readiness * 10) + (trend_diff * 20)
-score = point_score + need_score
+    # Iterate over unique values in the 'Participant' column
+    for participant in df['Participant'].unique():
+        # Filter the DataFrame for the current participant
+        participant_df = df[df['Participant'] == participant]
+        # Store the filtered DataFrame in the dictionary
+        participant_dfs[participant] = participant_df
 
-# Round the calculated values
-normalized_vote = normalized_vote.round(2)
-normalized_points = normalized_points.round(2)
-avg_readiness = avg_readiness.round(2)
-trend_diff = trend_diff.round(2)
-point_score = point_score.round(2)
-need_score = need_score.round(2)
-score = score.round(2)
+    # Now you have separate DataFrames for each participant
+    # You can perform calculations for each participant as needed
+    for participant, participant_df in participant_dfs.items():
+        total_votes = participant_df.groupby('Element')['Participant'].nunique()
+        total_votes_column = participant_df.groupby('Element')['Participant'].nunique()
+        print("total votes column", total_votes_column)
 
-# Create a DataFrame with the calculated values
-calculated_data = {
-    'Element': total_votes.index,
-    'Total Votes': total_votes.values,
-    'Avg Points': avg_points.values,
-    'Avg Readiness': avg_readiness.values,
-    'Trend Difference': trend_diff.values,
-    'Normalized Vote': normalized_vote.values,
-    'Normalized Points': normalized_points.values,
-    'Point Score': point_score.values,
-    'Need Score': need_score.values,
-    'Score': score.values
-}
-calculated_df = pd.DataFrame(calculated_data)
+        # Normalized Vote
+        range_total_votes_column = max(total_votes_column) - min(total_votes_column)
+        normalized_vote = (total_votes - min(total_votes_column)) / range_total_votes_column
 
-# Use calculated_df as needed
-print(calculated_df)
-print(df)
+        # Avg Points
+        avg_points = participant_df.groupby('Element')['Weighting'].sum() / total_votes
+
+        # Normalized Points
+        normalized_points = (avg_points - avg_points.min()) / (avg_points.max() - avg_points.min())
+
+        # Avg Readiness
+        avg_readiness = participant_df.groupby('Element')['Readiness'].sum() / avg_points
+
+        # Trend Diff
+        trend_diff = ((participant_df['Now'] - participant_df['Needed']).abs()).groupby(participant_df['Element']).sum() / total_votes
+
+        # Point score
+        point_score = (normalized_vote * 100) + (normalized_points * 100)
+
+        # Need Score
+        need_score = (avg_readiness * 10) + (trend_diff * 20)
+
+        # Score
+        score = point_score + need_score
+
+        # Round the values
+        normalized_vote = round(normalized_vote, 2)
+        normalized_points = normalized_points.round(2)
+        avg_readiness = round(avg_readiness, 2)
+        trend_diff = round(trend_diff, 2)
+        point_score = round(point_score, 2)
+        need_score = round(need_score, 2)
+        score = round(score, 2)
+
+        # Create a DataFrame with the calculated values
+        calculated_data = {
+            'Element': total_votes.index,
+            'Total Votes': total_votes.values,
+            'Avg Points': avg_points.values,
+            'Avg Readiness': avg_readiness.values,
+            'Trend Difference': trend_diff.values,
+            'Normalized Vote': normalized_vote.values,
+            'Normalized Points': normalized_points.values,
+            'Point Score': point_score.values,
+            'Need Score': need_score.values,
+            'Score': score.values
+        }
+        calculated_df = pd.DataFrame(calculated_data)
+
+        # Use calculated_df as needed
+        print(calculated_df)
+
+    # Print the original DataFrame for debugging
+    # for participant, participant_df in participant_dfs.items():
+    #     print(f"DataFrame for {participant}:")
+        print(participant_df)

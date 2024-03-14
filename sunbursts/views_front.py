@@ -6,6 +6,7 @@ from .graph import generate_graph
 from django.http import HttpResponse
 import base64
 from django.shortcuts import render, get_object_or_404, redirect
+from .math_calculations import math_calculations
 
 
 class ElementTableView(LoginRequiredMixin, ListView):
@@ -102,3 +103,8 @@ class GraphListView(LoginRequiredMixin, ListView):
 
 class ThankYouView(TemplateView):
     template_name='participants/thank_you.html'
+
+
+def do_calculations(request):
+    math_calculations()
+    return HttpResponse("Check log:")
