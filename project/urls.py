@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.shortcuts import redirect
 from rest_framework_simplejwt import views as jwt_views
 from .views import MyTokenObtainPairView
 from django.views.generic.base import TemplateView
@@ -7,7 +8,8 @@ from sunbursts.views_front import HomeView
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # Redirects the 'admin/' URL to the root URL
+    re_path(r'^admin/$', lambda request: redirect('/', permanent=False)),
     path("api-auth/", include("rest_framework.urls")),
     path(
         "api/token/",
