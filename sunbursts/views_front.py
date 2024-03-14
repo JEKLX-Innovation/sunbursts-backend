@@ -14,7 +14,6 @@ class ElementTableView(LoginRequiredMixin, ListView):
     context_object_name = "elements"
 
 class SurveyView(CreateView, UpdateView):
-    # Assuming each project has one survey for simplification
     template_name = "participants/survey.html"
     model = Survey
     fields = "__all__"
@@ -105,4 +104,19 @@ class GraphListView(LoginRequiredMixin, ListView):
 
         return render(request, 'math_calculations.html', context)
 
+def survey_for_participant(request, unique_link):
+    participant = get_object_or_404(Participant, unique_link=unique_link)
+    project = participant.project
+    survey = project.surveys.first()
+    
+    if not survey:
+        pass
+
+    elements = survey.selected_elements.all() if survey else []
+    context = {
+        'survey': survey,
+        'participant': participant,
+        'elements': elements,
+    }
+    return render(request, 'participants/survey.html', context)
 
