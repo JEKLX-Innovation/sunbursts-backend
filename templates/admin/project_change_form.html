@@ -1,0 +1,28 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+<!-- Your custom button HTML and JavaScript here -->
+
+<!-- <li>
+  <a href='graph/' class="button">Show Sunburst</a>
+</li> -->
+
+<div style="margin-bottom: 20px;">
+  <input type="button" value="Show Sunburst" class="btn btn-primary" id="sunburstButton"/>
+</div>
+
+<script type="text/javascript">
+    var baseUrl = '{% url "graph" %}';
+
+    document.getElementById("sunburstButton").addEventListener("click", function()
+    {
+      var projectId = '{{ original.id }}'; // 'original' is the context variable for the current object
+      if(projectId) {
+          window.location.href = baseUrl + projectId + '/';
+      } else {
+          alert('Project ID is not available.');
+      }
+    });
+</script>
+
+{% endblock %}

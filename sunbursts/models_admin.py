@@ -9,6 +9,7 @@ from .models import SunburstElement
 
 class ProjectAdmin(admin.ModelAdmin):
     change_list_template = "admin/project_change_list.html"
+    change_form_template = "admin/project_change_form.html"
 
     def get_urls(self):
         urls = super().get_urls()
