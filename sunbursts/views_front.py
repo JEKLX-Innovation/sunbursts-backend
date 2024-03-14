@@ -22,18 +22,14 @@ class SurveyView(CreateView, UpdateView):
 
     def survey_detail(request, pk):
         survey = get_object_or_404(Survey.objects.prefetch_related('elements'), pk=pk)
-        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
-        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
-
         context = {
             'survey': survey,
-            # 'survey_responses': survey_responses,
-            # 'element_responses': element_responses,
         }
         return render(request, 'participants/survey.html', context)
     # def survey_view(request, survey_id):
     #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
     #     return render(request, 'admin/survey.html', {'survey': survey})
+
 
 
 class SurveyResponseView(CreateView):
@@ -47,27 +43,36 @@ class SurveyResponseView(CreateView):
 
         # Assuming the participant and survey are determined in some way (e.g., session, hidden input)
         survey_id = request.POST.get('survey_id')
-        print("Survey ID:", survey_id)
-
-        # Create a survey response object
+        print("survey_id, POST:", survey_id)
         survey_response = SurveyResponse.objects.create(survey_id=survey_id)
+        print("survey_id, POST:", survey_id)
+        print("survey_response, POST:", request.POST)
 
-        # Create a formset for ElementResponse
-        ElementResponseFormSet = modelformset_factory(ElementResponse, fields=('element', 'readiness', 'weighting', 'trendnow', 'trendneeded'), extra=0)
-        formset = ElementResponseFormSet(request.POST)
-        
-        if formset.is_valid():
-            # Save each form in the formset
-            for form in formset:
-                element_response = form.save(commit=False)
-                element_response.survey_response = survey_response
-                element_response.save()
+        # Iterate through the submitted elements
+        for key, value in request.POST.items():
+            if key.startswith('element_'):
+                _, element_id, field_name = key.split('_')
+                print("key, value, element_id:", field_name, value, element_id)
 
-            return redirect(self.get_success_url())
-        else:
-            # Handle invalid formset
-            print("Formset errors:", formset.errors)
-            return HttpResponse("Formset is invalid")
+                if field_name == 'selected' and value == 'on':
+                    value = 1
+                elif field_name == 'selected':
+                    value = 0
+                else:
+                    try:
+                        value = int(value) if value.strip() != '' else 0
+                    except ValueError:
+                        value = None
+                # Create or update the ElementResponse
+                print("key, value, element_id:", field_name, value, element_id)
+
+                ElementResponse.objects.update_or_create(
+                    survey_response=survey_response,
+                    element_id=element_id,
+                    defaults={field_name: value}
+                )
+        return redirect(self.success_url)
+
 
 class HomeView(ListView):
     template_name = "home.html"

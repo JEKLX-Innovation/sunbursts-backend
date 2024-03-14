@@ -7,6 +7,7 @@
 
   <form method="post" action="{% url 'survey_response' %}">
     {% csrf_token %}
+    <input type="hidden" name="survey_id" value="{{ survey.id }}">
     <div
       class="w-1/2 mx-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -40,7 +41,7 @@
                       {{ element.name }}
                   </th>
                   <td class="px-6 py-4">
-                    <input type="checkbox" name="element_{{ element.id }}_select" class="form-checkbox text-blue-600 dark:text-blue-500 hover:underline">
+                    <input type="checkbox" name="element_{{ element.id }}_selected" class="form-checkbox text-blue-600 dark:text-blue-500 hover:underline">
                   </td>
                   <td class="px-6 py-4">
                     <input type="number" name="element_{{ element.id }}_weighting" class="form-input text-blue-600 dark:text-blue-500 hover:underline" max="{{ survey.weighting_max }}" value="{{ survey.weighting_default }}">
