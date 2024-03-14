@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Participant, Element, SurveyResponse, Survey
+from .models import Project, Participant, Element, SurveyResponse, Survey, ElementResponse
 from django.urls import path
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -51,6 +51,8 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(Participant)
 
 admin.site.register(Element)
+
+admin.site.register(ElementResponse)
 
 admin.site.register(SurveyResponse)
 
