@@ -43,6 +43,7 @@ class Survey(models.Model):
 
 class SurveyResponse(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, null=True, blank=True, related_name='survey_responses')
+    # responses = models.ForeignKey(Response, on_delete=models.CASCADE, null=True, blank=True)
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self) -> Any:
         if self.survey and self.survey.project:
@@ -59,12 +60,12 @@ class ElementResponse(models.Model):
     trendnow = models.IntegerField(default=0)
     trendneeded = models.IntegerField(default=0)
     def __str__(self) -> Any:
+        return self.element.name
     
+# class Graph(models.Model):
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='graph')
+#     image = models.ImageField(upload_to='graph/')
+#     description = models.TextField()
 
-class Graph(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='graph')
-    image = models.ImageField(upload_to='graph/')
-    description = models.TextField()
-
-    def __str__(self):
-        return f"Graph for {self.project.name}"
+#     def __str__(self):
+#         return f"Graph for {self.project.name}"

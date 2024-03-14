@@ -6,7 +6,6 @@ from .graph import generate_graph
 from django.http import HttpResponse
 import base64
 from django.shortcuts import render, get_object_or_404, redirect
-from django.forms import modelformset_factory
 
 
 class ElementTableView(LoginRequiredMixin, ListView):
@@ -26,51 +25,48 @@ class SurveyView(CreateView, UpdateView):
             'survey': survey,
         }
         return render(request, 'participants/survey.html', context)
-    # def survey_view(request, survey_id):
-    #     survey = get_object_or_404(Survey.objects.prefetch_related('elements'), id=survey_id)
-    #     return render(request, 'admin/survey.html', {'survey': survey})
+
 
 
 
 class SurveyResponseView(CreateView):
+    # template_name = "participants/survey_response.html"
     model = SurveyResponse
-    fields = []  # Remove fields attribute since we're using formsets
+    fields = ['element_responses']
+    # context_object_name = "survey_response"
     success_url = reverse_lazy("thank_you")
 
     def post(self, request, *args, **kwargs):
-        # Print the request method
-        print("Request method:", request.method)
-
-        # Assuming the participant and survey are determined in some way (e.g., session, hidden input)
+        participant_id = request.POST.get('participant_id')
         survey_id = request.POST.get('survey_id')
-        print("survey_id, POST:", survey_id)
+        print("survey_id, participant_id POST:", survey_id, participant_id)
         survey_response = SurveyResponse.objects.create(survey_id=survey_id)
-        print("survey_id, POST:", survey_id)
         print("survey_response, POST:", request.POST)
-
         # Iterate through the submitted elements
         for key, value in request.POST.items():
             if key.startswith('element_'):
                 _, element_id, field_name = key.split('_')
                 print("key, value, element_id:", field_name, value, element_id)
-
                 if field_name == 'selected' and value == 'on':
-                    value = 1
+                    ElementResponse.objects.update_or_create(
+                    survey_response=survey_response,
+                    element_id=element_id,
+                    selected=True
+                    )
                 elif field_name == 'selected':
-                    value = 0
+                    value = False
                 else:
                     try:
-                        value = int(value) if value.strip() != '' else 0
+                        value = int(value)
+                        ElementResponse.objects.update_or_create(
+                        survey_response=survey_response,
+                        element_id=element_id,
+                        defaults={field_name: value})
+                    # if value.strip() != '' else 0
                     except ValueError:
                         value = None
                 # Create or update the ElementResponse
                 print("key, value, element_id:", field_name, value, element_id)
-
-                ElementResponse.objects.update_or_create(
-                    survey_response=survey_response,
-                    element_id=element_id,
-                    defaults={field_name: value}
-                )
         return redirect(self.success_url)
 
 
@@ -85,22 +81,23 @@ class GraphListView(LoginRequiredMixin, ListView):
     model = Project
     context_object_name = "projects"
 
-    # def get_context_data(self, **kwargs):
-    #         context = super().get_context_data(**kwargs)
-    #         graph_buffer = generate_graph()
-
-    #         graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
-
-    #         context['graph'] = graph_base64
-    #         return context
-
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            for project in context['projects']:
-                graph_buffer = generate_graph(project)  # You need to implement generate_graph function
-                graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
-                project.graph = graph_base64
+            graph_buffer = generate_graph()
+
+            graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
+
+            context['graph'] = graph_base64
             return context
+
+
+    def get_data(request, surveyresponse, pk):
+        surveyresponse = get_object_or_404(Survey.objects.prefetch_related('elementresponse'), pk=pk)
+
+        context = {
+            'survey': surveyresponse,
+        }
+        return render(request, 'math_calculations.html', context)
 
 
 class ThankYouView(TemplateView):

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Project, Participant, Element, SurveyResponse, Survey, ElementResponse, Graph
+from .models import Project, Participant, Element, SurveyResponse, Survey, ElementResponse
 from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Project
+# from .models import Project
 from .forms import CSVImportForm
 import csv
 import io
@@ -13,12 +13,7 @@ import io
 
 class ProjectAdmin(admin.ModelAdmin):
     change_list_template = "admin/project_change_list.html"
-    list_display = ('name', 'graph_link')  # Add graph_link to list_display
-
-    def graph_link(self, obj):
-        return '<a href="{}">View Graph</a>'.format(reverse('admin:graph', args=[obj.pk]))
-    graph_link.allow_tags = True
-    graph_link.short_description = 'Graph Link'
+ 
 
 
     def get_urls(self):
@@ -65,4 +60,3 @@ admin.site.register(SurveyResponse)
 
 admin.site.register(Survey)
 
-admin.site.register(Graph)
