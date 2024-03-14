@@ -5,7 +5,6 @@ from .views import MyTokenObtainPairView
 from django.views.generic.base import TemplateView
 from sunbursts.views_front import HomeView
 from django.contrib.auth.views import LogoutView
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),

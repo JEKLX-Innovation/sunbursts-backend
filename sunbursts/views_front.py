@@ -99,3 +99,29 @@ class GraphListView(LoginRequiredMixin, ListView):
             # 'element_responses': element_responses,
         }
         return render(request, 'math_calculations.html', context)
+
+
+    def get_data(request, surveyresponse, pk):
+        surveyresponse = get_object_or_404(Survey.objects.prefetch_related('elementresponse'), pk=pk)
+        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
+        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
+
+        context = {
+            'survey': surveyresponse,
+            # 'survey_responses': survey_responses,
+            # 'element_responses': element_responses,
+        }
+        return render(request, 'math_calculations.html', context)
+
+
+    def get_data(request, surveyresponse, pk):
+        surveyresponse = get_object_or_404(Survey.objects.prefetch_related('elementresponse'), pk=pk)
+        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
+        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
+
+        context = {
+            'survey': surveyresponse,
+            # 'survey_responses': survey_responses,
+            # 'element_responses': element_responses,
+        }
+        return render(request, 'math_calculations.html', context)
