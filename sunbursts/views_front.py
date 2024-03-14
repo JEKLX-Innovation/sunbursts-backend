@@ -88,7 +88,7 @@ class GraphListView(LoginRequiredMixin, ListView):
             graph_base64 = base64.b64encode(graph_buffer.getvalue()).decode('utf-8')
 
             context['graph'] = graph_base64
-            
+
             return context
 
 
@@ -102,7 +102,7 @@ class GraphListView(LoginRequiredMixin, ListView):
             # 'survey_responses': survey_responses,
             # 'element_responses': element_responses,
         }
-        
+
         return render(request, 'math_calculations.html', context)
-    
-    
+
+
