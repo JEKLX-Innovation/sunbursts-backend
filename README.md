@@ -38,6 +38,8 @@ Bug Fixes
 * Implement by adding additional views, templates and urls for usability
 * Upgrade styling to align with BeSpace branding
 * Integrate with existing BeSpace site client login
+* Customization of the Participant experience
+    * Adjust sunbursts/templates/participants/html files for desired experience
 
 
 ## Technical Overview - Django Permissions & Postgresql
