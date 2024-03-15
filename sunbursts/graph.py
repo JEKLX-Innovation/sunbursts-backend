@@ -1,7 +1,7 @@
 """
-Generates a circular bar chart based on data from SunburstElement instances.
+Generates a circular bar plot based on data from SunburstElement instances.
 
-This function retrieves data from SunburstElement instances, processes it, and generates a polar bar chart
+This function retrieves data from SunburstElement instances, processes it, and generates a circular bar plot
 using Matplotlib.
 
 Returns:

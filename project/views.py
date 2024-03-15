@@ -2,7 +2,7 @@
 Defines custom token serializers and views for token obtainment in Django Rest Framework.
 
 This module provides the MyTokenObtainPairSerializer and MyTokenObtainPairView classes,
-which customize the token serialization and token obtainment process, respectively.
+which customize the token serialization and token obtainment process.
 
 """
 

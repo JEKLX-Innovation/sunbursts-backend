@@ -1,5 +1,5 @@
 """
-Registers models and their corresponding admin classes for the Django admin site.
+Registers models and admin classes.
 
 This module registers models and admin classes with the Django admin site.
 

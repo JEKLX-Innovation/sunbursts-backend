@@ -2,7 +2,7 @@
 Defines custom forms for creating and changing CustomUser instances in Django.
 
 This module provides CustomUserCreationForm and CustomUserChangeForm, which are subclasses
-of Django's UserCreationForm and UserChangeForm, respectively. These custom forms are tailored
+of Django's UserCreationForm and UserChangeForm. These custom forms are tailored
 to work with the CustomUser model.
 
 """

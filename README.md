@@ -72,7 +72,8 @@ Build 1.0 Feature Tasks
 #### For Lana list of possible commands for monica to know
 
 `python manage.py runserver
-source .venv/bin/activate 
+source .venv/bin/activate
 python manage.py migrate  
 python manage.py makemigrations sunbursts
-pip install -r requirements.txt          `
+pip install -r requirements.txt
+python3 -c "import secrets; print(secrets.token_urlsafe())"`
