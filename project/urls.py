@@ -1,3 +1,10 @@
+"""
+Defines URL patterns for the Django project.
+
+This module specifies the URL patterns for various parts of the project, including the admin interface,
+authentication endpoints, API endpoints for token management, frontend views, and logout functionality.
+
+"""
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework_simplejwt import views as jwt_views
