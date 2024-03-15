@@ -15,7 +15,6 @@ It strives to make analyzing participant data easier for the admin and allow for
 #### Full Implementation
 
 * Upload static .csv data and visualize in circular barplot
-* Upload elements and assign to project
 * Create surveys customized for project
 * Participant survey administration and data collection via unique link
 
@@ -26,10 +25,12 @@ The app also provides database models and partial implementation of additional f
 * Analysis capabilities of participant survey data
 * Calculation of participant data received, displayed per project from survey submissions
 * Survey creation with multiple customized admin inputs
+* Upload elements and assign to project
 
-Bug Fixes
+Known Bugs
 * Math calculations are able to get data from database but not able to separate surveys and apply calculations per survey.
 * Bug fix needed on naming conventions to properly match data.
+
 
 #### Recommended Features
 
