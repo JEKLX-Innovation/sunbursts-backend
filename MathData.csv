@@ -1,0 +1,29 @@
+Category,Element,Participant_ID,Weighting,Readiness,Now,Needed
+E,Reputation,1,10,1,-1,2
+E,Reputation,2,8,2,0,1
+E,Investments in Infrastructure,1,2,2,-2,2
+E,Investments in Infrastructure,2,3,3,-1,2
+BR,Responsibility for Compliance,1,18,4,1,2
+BR,Responsibility for Compliance,2,17,5,0,1
+BR,Overtime Pay,1,10,6,2,0
+BR,Overtime Pay,2,11,7,1,-1
+E,Ethical Market Demand,1,15,5,0,2 
+E,Ethical Market Demand,2,14,4,-1,1
+W,Third Party Engagement,1,5,6,0,2
+W,Third Party Engagement,2,4,5,-1,1
+W,Job Satisfaction,1,10,1,2,0
+W,Transparency Visibility,2,9,2,1,-2
+S,Consumer Awareness of Supply Chain,1,10,4,-1,1
+S,Cost of Labor,2,11,5,0,2
+S,Fair and legal Labor Practices,1,10,2,-1,0
+S,Retail Price,2,9,3,-2,-1
+S,Human Resources Capacity Development,1,13,8,0,1
+S,Profitability,2,12,7,1,2
+S,Responsible Business Practices,1,7,7,1,2
+S,Cost of Production,2,8,8,0,1
+S,Responsible Supplier Practices,1,10,10,1,2
+S,Fear of Transparency,2,9,9,0,1
+
+
+
+
