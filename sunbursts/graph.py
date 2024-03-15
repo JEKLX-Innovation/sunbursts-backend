@@ -1,3 +1,14 @@
+"""
+Generates a circular bar chart based on data from SunburstElement instances.
+
+This function retrieves data from SunburstElement instances, processes it, and generates a polar bar chart
+using Matplotlib.
+
+Returns:
+    io.BytesIO: A buffer containing the generated chart image.
+
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -6,6 +17,12 @@ from .models import SunburstElement
 from django.shortcuts import render, get_object_or_404, redirect
 
 def create_df():
+    """
+    Creates a DataFrame from SunburstElement instances.
+
+    Returns:
+        pandas.DataFrame: DataFrame containing SunburstElement data.
+    """
     sunburst_elements = SunburstElement.objects.all()
     # project = get_object_or_404(SunburstElement.objects.prefetch_related('projects'), pk=pk)
     # context = {'project': project}
@@ -26,6 +43,13 @@ def create_df():
 
 
 def generate_graph():
+    """
+    Generates a polar bar chart.
+
+    Returns:
+        io.BytesIO: A buffer containing the generated chart image.
+    """
+     
     df = create_df()
     # Read data from CSV file
     # df = pd.read_csv('StakeholderInputAnalysis.xlsx - Mock Data.csv')

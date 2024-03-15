@@ -1,3 +1,20 @@
+"""
+Module containing various views for project management and survey responses.
+
+Attributes:
+    None
+
+Classes:
+    - ElementTableView: A view to display a table of elements.
+    - SurveyView: A view to display and manage surveys.
+    - SurveyResponseView: A view to handle survey responses.
+    - HomeView: A view for the home page.
+    - GraphListView: A view to display graphs.
+    - survey_for_participant: A view for survey responses by participants.
+
+Functions:
+    None
+"""
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 from django.urls import reverse_lazy

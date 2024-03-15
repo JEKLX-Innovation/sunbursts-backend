@@ -1,8 +1,30 @@
+"""
+Performs mathematical calculations based on survey and element responses.
+
+This function retrieves data from SurveyResponse and ElementResponse instances,
+performs mathematical calculations on the data, and generates calculated values
+for each participant.
+
+Returns:
+    None
+"""
 from .models import SurveyResponse, ElementResponse
 
 import pandas as pd
 
 def math_calculations():
+    """
+    Performs mathematical calculations based on survey and element responses.
+
+    Retrieves data from SurveyResponse and ElementResponse instances,
+    performs mathematical calculations on the data, and generates calculated values
+    for each participant.
+
+    Prints the calculated DataFrames for each participant.
+
+    Returns:
+        None
+    """
     survey_responses = SurveyResponse.objects.all().prefetch_related('element_responses')
     print("Survey Responses:", survey_responses)
     data = []

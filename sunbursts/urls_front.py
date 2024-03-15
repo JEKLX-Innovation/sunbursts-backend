@@ -1,3 +1,16 @@
+"""
+Module containing URL patterns for front-end views.
+
+Attributes:
+    urlpatterns (list): List of URL patterns.
+
+Classes:
+    None
+
+Functions:
+    None
+"""
+
 from django.urls import path
 from .views_front import ElementTableView, SurveyView, GraphListView, SurveyResponseView, do_calculations
 from .views_front import survey_for_participant
