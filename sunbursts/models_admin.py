@@ -1,3 +1,15 @@
+"""
+Module containing views for CSV import in the admin panel.
+
+Attributes:
+    None
+
+Classes:
+    - ProjectAdmin: Admin class for managing CSV import in the admin panel.
+
+Functions:
+    None
+"""
 from django.contrib import admin, messages
 from .forms import CSVImportForm
 from django.urls import path
@@ -8,6 +20,9 @@ from .models import SunburstElement
 
 
 class ProjectAdmin(admin.ModelAdmin):
+    """
+    Admin class for managing CSV import in the admin panel.
+    """
     change_list_template = "admin/project_change_list.html"
     change_form_template = "admin/project_change_form.html"
 
@@ -30,11 +45,11 @@ class ProjectAdmin(admin.ModelAdmin):
                 for row in csv.reader(io_string, delimiter=',', quotechar='"'):
                     _, created = SunburstElement.objects.update_or_create(
                         project=project,
-                        element_name=row[0],
-                        point_score=row[1],
-                        need_score=row[2],
-                        score=row[3],
-                        category=row[4],
+                        element_name=row[1],
+                        point_score=row[10],
+                        need_score=row[11],
+                        score=row[12],
+                        category=row[13],
 
                     )
                 messages.success(request, "Your CSV file has been imported")

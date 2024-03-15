@@ -1,11 +1,29 @@
+"""
+Module containing various views for project management and survey responses.
+
+Attributes:
+    None
+
+Classes:
+    - ElementTableView: A view to display a table of elements.
+    - SurveyView: A view to display and manage surveys.
+    - SurveyResponseView: A view to handle survey responses.
+    - HomeView: A view for the home page.
+    - GraphListView: A view to display graphs.
+    - survey_for_participant: A view for survey responses by participants.
+
+Functions:
+    None
+"""
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 from django.urls import reverse_lazy
 from .models import Project, Element, Survey, SurveyResponse, ElementResponse, Participant
 from .graph import generate_graph, create_df
 from django.http import HttpResponse
 import base64
 from django.shortcuts import render, get_object_or_404, redirect
+from .math_calculations import math_calculations
 
 
 class ElementTableView(LoginRequiredMixin, ListView):
@@ -38,13 +56,11 @@ class SurveyResponseView(CreateView):
         print("survey_id, participant_id POST:", survey_id, participant_id)
         survey_response = SurveyResponse.objects.create(survey_id=survey_id, participant_id=participant_id)
         print("survey_response, POST:", request.POST)
-
         # Iterate through the submitted elements
         for key, value in request.POST.items():
             if key.startswith('element_'):
                 _, element_id, field_name = key.split('_')
                 print("key, value, element_id:", field_name, value, element_id)
-
                 if field_name == 'selected' and value == 'on':
                     ElementResponse.objects.update_or_create(
                     survey_response=survey_response,
@@ -93,13 +109,9 @@ class GraphListView(LoginRequiredMixin, ListView):
 
     def get_data(request, surveyresponse, pk):
         surveyresponse = get_object_or_404(Survey.objects.prefetch_related('elementresponse'), pk=pk)
-        # survey_responses = SurveyResponse.objects.filter(survey=survey).prefetch_related('participant')
-        # element_responses = ElementResponse.objects.filter(survey_response__in=survey_responses).select_related('element')
 
         context = {
             'survey': surveyresponse,
-            # 'survey_responses': survey_responses,
-            # 'element_responses': element_responses,
         }
 
         return render(request, 'math_calculations.html', context)
@@ -120,3 +132,12 @@ def survey_for_participant(request, unique_link):
     }
     return render(request, 'participants/survey.html', context)
 
+
+
+class ThankYouView(TemplateView):
+    template_name='participants/thank_you.html'
+
+
+def do_calculations(request):
+    math_calculations()
+    return HttpResponse("Check log:")

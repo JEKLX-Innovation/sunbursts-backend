@@ -1,3 +1,10 @@
+"""
+Defines URL patterns for the Django project.
+
+This module specifies the URL patterns for various parts of the project, including the admin interface,
+authentication endpoints, API endpoints for token management, frontend views, and logout functionality.
+
+"""
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework_simplejwt import views as jwt_views
@@ -20,10 +27,10 @@ urlpatterns = [
         name="token_refresh",
     ),
     path("sunbursts/", include("sunbursts.urls_front")),
-    # If you still want to use HomeView for a specific path, change the path from "" to something else, e.g., "home/"
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("logout/", LogoutView.as_view(), name="logout"),
     # Make admin the first page a user goes to
     path("", admin.site.urls),
-    path('logout/', LogoutView.as_view(), name='logout'),
 ]
+
