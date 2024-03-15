@@ -2,6 +2,9 @@ from typing import Any
 from django.db import models
 import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.urls import reverse
+from django.contrib import admin
+from django.utils.html import format_html
 
 
 class Project(models.Model):
@@ -16,8 +19,19 @@ class Participant(models.Model):
     participant_name = models.CharField(max_length=255)
     participant_email = models.EmailField()
     unique_link = models.UUIDField(default=uuid.uuid4, editable=False)
+    
     def __str__(self) -> Any:
         return self.participant_name
+    
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        super().save(*args, **kwargs) 
+        if is_new:
+            # Unique link is generated
+            pass
+
+    def get_absolute_url(self):
+        return reverse('survey_for_participant', kwargs={'unique_link': self.unique_link})
 
 
 class Element(models.Model):
@@ -63,7 +77,7 @@ class ElementResponse(models.Model):
         return self.element.name
 
 
-class Sunburst(models.Model):
+class SunburstElement(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     element_name = models.CharField(max_length=255)
     point_score = models.FloatField(default=0)
