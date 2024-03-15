@@ -71,3 +71,4 @@ python3 -m venv venv
 ### How to Initialize/Run Application
 
 * `python manage.py runserver`
+

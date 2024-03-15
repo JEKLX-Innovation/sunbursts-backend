@@ -1,3 +1,21 @@
+"""
+Module containing models for project management and survey responses.
+
+Attributes:
+    None
+
+Classes:
+    - Project: Model representing a project.
+    - Participant: Model representing a participant in a project.
+    - Element: Model representing an element in a project.
+    - Survey: Model representing a survey associated with a project.
+    - SurveyResponse: Model representing a survey response.
+    - ElementResponse: Model representing an element response in a survey.
+    - SunburstElement: Model representing elements for sunburst charts.
+
+Functions:
+    None
+"""
 from typing import Any
 from django.db import models
 import uuid
