@@ -5,7 +5,7 @@
 <div class="space-y-8 p-8">
   <h1 class="text-4xl text-center">Survey: {{ survey.project.name }}</h1>
 
-  <form method="post" action="{% url 'survey_response' %}">
+  <form method="post" action="{% url 'survey_for_participant' participant.unique_link %}">
     {% csrf_token %}
     <input type="hidden" name="survey_id" value="{{ survey.id }}">
     <div
