@@ -67,4 +67,12 @@ Build 1.0 Feature Tasks
 
 ### Deployed Link
 
-[API Deployed Link](https://cookie-stand-api-xind14.vercel.app/)
+
+
+#### For Lana list of possible commands for monica to know
+
+`python manage.py runserver
+source .venv/bin/activate 
+python manage.py migrate  
+python manage.py makemigrations sunbursts
+pip install -r requirements.txt          `
