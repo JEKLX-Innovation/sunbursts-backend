@@ -1,70 +1,73 @@
-# Sunbursts
+# JEKLX Innovation
 
-## Group Members
+## Team
 
 Johnny Backus, Kaitlin Davis, Xin Deng, Errol Vidad, Lana Zumbrunn
 
-### Summary of project:
+## Summary of project
 
-This project will allow an admin to collect data from participants in a way that doesn’t require participants to use a spreadsheet which is prone to errors when formulas get messed up.
+This app allows an admin to upload participant data from a .csv file and visualize the data in a circular barplot.
 
-It will make analyzing the data easier for the admin. Right now, pulling together the data from all the participants is labor intensive.
+It strives to make analyzing participant data easier for the admin and allow for beautiful and easily digestible data for the admin's clients.
 
-It will allow for data visualization that is beautiful and easily digestible.
+### Features
+
+#### Full Implementation
+
+* Upload static .csv data and visualize in circular barplot
+* Upload elements and assign to project
+* Create surveys customized for project
+* Participant survey administration and data collection via unique link
+
+#### Partial Implementation
+
+The app also provides database models and partial implementation of additional functionality including:
+
+* Analysis capabilities of participant survey data
+* Calculation of participant data received, displayed per project from survey submissions
+* Survey creation with multiple customized admin inputs
+
+Bug Fixes
+* Math calculations are able to get data from database but not able to separate surveys and apply calculations per survey.
+* Bug fix needed on naming conventions to properly match data.
+
+#### Recommended Features
+
+* Admin Dashboard
+    * Create an html interface for smoother admin UI/UX to
+* Implement by adding additional views, templates and urls for usability
+* Upgrade styling to align with BeSpace branding
+* Integrate with existing BeSpace site client login
 
 
-### Overview - Django Permissions & Postgresql
+## Technical Overview - Django Permissions & Postgresql
 
-Complete at end of week. This project uses Django and Django Rest Framework together. It builds out a Restful API as well as a user facing site and data in a remote database.
+This project uses Django and Django Rest Framework together. It builds out a Restful API as well as a user facing site and data in a remote database.
 
-#### Version 1.0
+### Tech Stack
 
-Build 1.0 Feature Tasks
+* Django
+* Django REST Framework
+* Matplotlib
+* NumPy
+* Pandas
 
-1. Use API quick start [template](https://github.com/codefellows/python-401-api-quickstart)
-2. Install from requirements.txt
-3. Update templates to match cookie stand model
-4. Host database at elephantSQL
+## Getting Started
+
+* Install python if not already installed `pip install python`
+* Create a virtual environment
+
+``` python
+mkdir myproject
+cd myproject
+python3 -m venv venv
+```
+
+* Activate virtual environment `source venv/bin/activate`
+* Install requirements `pip install requirements.txt`
+* Host database
+* Add database engine, name, user, password, host and port to .env
 
 ### How to Initialize/Run Application
 
-- `python manage.py runserver`
-
-## Customization Steps
-
-- DO NOT migrate yet
-- add additional dependencies as needed
-  - Re-export requirements.txt as needed
-- change `things` folder to the app name of your choice
-- Search through entire code base for `Thing`,`Things` and `things` to modify code to use your resource
-  - `project/settings.py`
-  - `project/urls.py`
-  - App's files
-    - `views.py`
-    - `urls.py`
-    - `admin.py`
-    - `serializers.py`
-    - `permissions.py`
-  - "Front" files
-    - if including a customer facing portion of the site then update/recreate:
-      - `urls_front.py`
-      - `views_front.py`
-      - template files
-      - Make sure to update project `urls.py` to add routes to the "front".
-- Update ThingModel with fields you need
-  - Make sure to update other modules that would be affected by Model customizations. E.g. serializers, tests, etc.
-- Rename `project/.env.sample` to `.env` and update as needed
-  - To generate secret key use `python3 -c "import secrets; print(secrets.token_urlsafe())"`
-- Run makemigrations and migrate commands when ready.
-- Run `python manage.py collectstatic`
-  - This repository includes static assets in repository. If you are using a Content Delivery Network then remove `staticfiles` from repository.
-- Optional: Update `api_tester.py`
-
-## Database
-
-**NOTE:** If you are using Postgres instead of SQLite then make sure to install `psycopg2-binary` and include in `requirements.txt`
-
-
-### Deployed Link
-
-[API Deployed Link](https://cookie-stand-api-xind14.vercel.app/)
+* `python manage.py runserver`
