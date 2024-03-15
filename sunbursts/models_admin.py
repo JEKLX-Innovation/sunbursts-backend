@@ -30,11 +30,11 @@ class ProjectAdmin(admin.ModelAdmin):
                 for row in csv.reader(io_string, delimiter=',', quotechar='"'):
                     _, created = SunburstElement.objects.update_or_create(
                         project=project,
-                        element_name=row[0],
-                        point_score=row[1],
-                        need_score=row[2],
-                        score=row[3],
-                        category=row[4],
+                        element_name=row[1],
+                        point_score=row[10],
+                        need_score=row[11],
+                        score=row[12],
+                        category=row[13],
 
                     )
                 messages.success(request, "Your CSV file has been imported")
